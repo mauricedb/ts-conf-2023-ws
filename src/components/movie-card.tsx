@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Movie } from '@prisma/client'
+import { useShoppingCart } from './shopping-cart'
 
 type Props = {
   movie: Pick<
@@ -22,6 +23,8 @@ type Props = {
 }
 
 export const MovieCard = ({ movie }: Props) => {
+  const { addMovie } = useShoppingCart()
+
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -40,9 +43,12 @@ export const MovieCard = ({ movie }: Props) => {
         </div>
         <p className="line-clamp-5">{movie.overview}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="justify-between">
         <Button asChild variant="link">
           <Link href={`/movies/${movie.id}`}>Details</Link>
+        </Button>
+        <Button variant="secondary" onClick={() => addMovie(movie)}>
+          Add to cart
         </Button>
       </CardFooter>
     </Card>

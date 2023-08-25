@@ -5,10 +5,13 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { useShoppingCart } from './shopping-cart'
 
 type Props = PropsWithChildren
 
 export function MainNav({ children }: Props) {
+  const { itemCount, checkout } = useShoppingCart()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const hasGenreParam = searchParams.has('genre')
@@ -44,6 +47,14 @@ export function MainNav({ children }: Props) {
             return null
           }
         })}
+        <Button
+          onClick={checkout}
+          disabled={!itemCount}
+          variant="default"
+          className="text-sm"
+        >
+          Checkout
+        </Button>
       </nav>
     </div>
   )
