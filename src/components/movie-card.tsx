@@ -18,7 +18,12 @@ import { useShoppingCart } from './shopping-cart'
 type Props = {
   movie: Pick<
     Movie,
-    'id' | 'title' | 'overview' | 'backdrop_path' | 'vote_average'
+    | 'id'
+    | 'title'
+    | 'overview'
+    | 'backdrop_path'
+    | 'vote_average'
+    | 'vote_count'
   >
 }
 
@@ -29,7 +34,10 @@ export const MovieCard = ({ movie }: Props) => {
     <Card className="flex flex-col">
       <CardHeader>
         <CardTitle>{movie.title}</CardTitle>
-        <CardDescription>Vote average: {movie.vote_average}</CardDescription>
+        <CardDescription>
+          Vote average: {movie.vote_average} (
+          {movie.vote_count.toLocaleString()} votes)
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="relative">

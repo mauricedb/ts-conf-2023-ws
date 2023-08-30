@@ -13,13 +13,14 @@ async function getMovies(
   page: number,
   genreId?: string,
 ): Promise<MovieRequiredForCard[]> {
-  const select: Prisma.MovieSelect = {
+  const select = {
     id: true,
     title: true,
     overview: true,
     backdrop_path: true,
     vote_average: true,
-  }
+    vote_count: true,
+  } satisfies Prisma.MovieSelect
 
   const orderBy: Prisma.MovieOrderByWithRelationInput = {
     vote_average: 'desc',
