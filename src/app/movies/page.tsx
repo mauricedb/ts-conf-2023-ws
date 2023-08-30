@@ -9,6 +9,18 @@ import { MovieCard } from '@/components/movie-card'
 type MovieRequiredForCard = ComponentProps<typeof MovieCard>['movie']
 const take = 8
 
+// Using a combination of the standard Pick and Required to get the exact type we need
+// type ExactMovieSelect = Required<
+//   Pick<Prisma.MovieSelect, keyof MovieRequiredForCard>
+// >
+
+// Using a custom type mapping to get the exact type we need
+type PrismaSelect<TRow> = {
+  [Prop in keyof TRow]: true
+}
+
+type ExactMovieSelect = PrismaSelect<MovieRequiredForCard>
+
 async function getMovies(
   page: number,
   genreId?: string,
@@ -20,7 +32,7 @@ async function getMovies(
     backdrop_path: true,
     vote_average: true,
     vote_count: true,
-  } satisfies Prisma.MovieSelect
+  } satisfies ExactMovieSelect
 
   const orderBy: Prisma.MovieOrderByWithRelationInput = {
     vote_average: 'desc',
