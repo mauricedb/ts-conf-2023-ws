@@ -5,8 +5,10 @@ import { PropsWithChildren, createContext, useContext, useState } from 'react'
 
 import { CheckoutDialog } from '@/components/checkout-dialog'
 
+type ShoppingCartMovie = Pick<Movie, 'id' | 'title'>
+
 const ShoppingCartContext = createContext({
-  addMovie: (movie: Movie) => {},
+  addMovie: (movie: ShoppingCartMovie) => {},
   checkout: () => {},
   itemCount: 0,
 })
@@ -16,12 +18,12 @@ export const useShoppingCart = () => {
 }
 export function ShoppingCartProvider({ children }: PropsWithChildren) {
   const [checkoutOpen, setCheckoutOpen] = useState(false)
-  const [movies, setMovies] = useState<Movie[]>([])
+  const [movies, setMovies] = useState<ShoppingCartMovie[]>([])
 
   return (
     <ShoppingCartContext.Provider
       value={{
-        addMovie: (movie: Movie) => {
+        addMovie: (movie: ShoppingCartMovie) => {
           setMovies((movies) => [...movies, movie])
         },
         checkout: () => {
