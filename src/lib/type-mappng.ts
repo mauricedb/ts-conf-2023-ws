@@ -29,7 +29,10 @@ type FinalOnlyPropsOfType<
     : never]: TObject[Prop]
 }
 
-type FinalStringPartsOfMovie = FinalOnlyPropsOfType<Movie, string>
+// Taken from https://effectivetypescript.com/2022/02/25/gentips-4-display/
+type Resolve<T> = T extends Function ? T : { [K in keyof T]: T[K] }
+
+type FinalStringPartsOfMovie = Resolve<FinalOnlyPropsOfType<Movie, string>>
 
 const partOfMovie: FinalStringPartsOfMovie = {
   backdrop_path: '',
