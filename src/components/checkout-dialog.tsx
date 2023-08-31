@@ -51,7 +51,7 @@ export function CheckoutDialog({
 
   const onSubmit = async (data: CheckoutForm) => {
     try {
-      await checkoutShoppingCart(data.name, data.account, totalAmount)
+      await checkoutShoppingCart(data.account, data.name, totalAmount)
       toast({
         title: 'Success',
         description: 'Checkout completed',
