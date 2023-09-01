@@ -16,19 +16,23 @@ import { Movie } from '@prisma/client'
 import { useShoppingCart } from './shopping-cart'
 
 type Props = {
-  movie: Pick<
-    Movie,
-    | 'id'
-    | 'title'
-    | 'overview'
-    | 'backdrop_path'
-    | 'vote_average'
-    | 'vote_count'
+  movie: Readonly<
+    Pick<
+      Movie,
+      | 'id'
+      | 'title'
+      | 'overview'
+      | 'backdrop_path'
+      | 'vote_average'
+      | 'vote_count'
+    >
   >
 }
 
 export const MovieCard = ({ movie }: Props) => {
   const { addMovie } = useShoppingCart()
+
+  // movie.title = 'This should not be allowed'
 
   return (
     <Card className="flex flex-col">
