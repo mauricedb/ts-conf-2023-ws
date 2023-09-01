@@ -80,9 +80,15 @@ export default async function MoviesPage({ searchParams }: Props) {
   return (
     <main className="flex-1 space-y-4 p-8 pt-6">
       <h2 className="text-3xl font-bold tracking-tight">Movies</h2>
-      <p className="p-6 text-center font-bold">
-        The top rated movie here is: &quot;{topMovie.title}&quot;.
-      </p>
+      {topMovie ? (
+        <p className="p-6 text-center font-bold">
+          The top rated movie here is: &quot;{topMovie.title}&quot;.
+        </p>
+      ) : (
+        <p className="p-6 text-center font-bold">
+          There are no movies in this genre.
+        </p>
+      )}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
         {movies.map((movie, index) => {
           return <MovieCard key={movie.id} movie={movie} />
