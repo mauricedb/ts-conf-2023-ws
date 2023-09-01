@@ -21,10 +21,14 @@ type PrismaSelect<TRow> = {
 
 type ExactMovieSelect = PrismaSelect<MovieRequiredForCard>
 
+type DeepReadonly<T> = {
+  readonly [P in keyof T]: DeepReadonly<T[P]>
+}
+
 async function getMovies(
   page: number,
   genreId?: string,
-): Promise<MovieRequiredForCard[]> {
+): Promise<DeepReadonly<MovieRequiredForCard[]>> {
   const select = {
     id: true,
     title: true,
@@ -76,6 +80,15 @@ export default async function MoviesPage({ searchParams }: Props) {
   const movies = await getMovies(page, searchParams.genre)
   const hasMore = !searchParams.genre && movies.length === take
   const topMovie = movies[0]
+
+  // movies.push({
+  //   backdrop_path: 'This should not be allowed',
+  //   id: 0,
+  //   overview: '',
+  //   title: '',
+  //   vote_average: 0,
+  //   vote_count: 0,
+  // })
 
   return (
     <main className="flex-1 space-y-4 p-8 pt-6">
