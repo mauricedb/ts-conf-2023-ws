@@ -43,3 +43,18 @@ const partOfMovie: FinalStringPartsOfMovie = {
 }
 
 console.log(partOfMovie)
+
+type CamelCase<S extends string> = S extends `${infer First}_${infer Rest}`
+  ? `${Lowercase<First>}${Capitalize<CamelCase<Rest>>}`
+  : Lowercase<S>
+
+type CamelCaseProps<TObject extends Record<keyof any, unknown>> = {
+  [Prop in keyof TObject as CamelCase<Prop & string>]: TObject[Prop]
+}
+
+type CamelCaseMovie = CamelCaseProps<Movie & { this_movie_is_popular: boolean }>
+
+type Names = 'foo' | 'bar'
+type Suffixes = 'Key' | 'Value'
+
+type Pairs = `${Names}${Suffixes}`
